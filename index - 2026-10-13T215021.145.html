@@ -1,0 +1,405 @@
+
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Study Zone Pro | Premium</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Phosphor Icons (High-End Vector Icons) -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        display: ['"Syne"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    colors: {
+                        oled: '#000000',
+                        pearl: '#ffffff',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Base Resets */
+        * {
+            -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box;
+        }
+        body {
+            overscroll-behavior-y: none;
+            will-change: transform;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- THE SHINE EFFECT (Text Animation) --- */
+        .text-shine {
+            background-size: 200% auto;
+            color: #000;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
+        }
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        /* Colorful Gradient Palettes for Text */
+        .grad-blue-cyan { background-image: linear-gradient(to right, #00c6ff, #0072ff, #00c6ff); }
+        .grad-gold { background-image: linear-gradient(to right, #f6d365, #fda085, #f6d365); }
+        .grad-purple-pink { background-image: linear-gradient(to right, #c471ed, #f64f59, #c471ed); }
+        .grad-emerald { background-image: linear-gradient(to right, #11998e, #38ef7d, #11998e); }
+        .grad-rose { background-image: linear-gradient(to right, #ff0844, #ffb199, #ff0844); }
+        .grad-honey { background-image: linear-gradient(to right, #fceabb, #f8b500, #fceabb); }
+        .grad-spidy { background-image: linear-gradient(to right, #5EE7DF, #B490CA, #5EE7DF); }
+        .grad-youtube { background-image: linear-gradient(to right, #f5576c, #f093fb, #f5576c); }
+
+        /* Premium Glass Cards (iOS Aesthetic) */
+        .card-light {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .dark .card-dark {
+            background: rgba(20, 20, 20, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        /* Fluid Entrance Animation */
+        @keyframes popUp {
+            0% { opacity: 0; transform: translateY(20px) scale(0.98); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .animate-pop {
+            animation: popUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            will-change: transform, opacity;
+        }
+
+        /* Flashy Animated Background Mesh */
+        .bg-mesh {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1;
+            background: radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+                        radial-gradient(at 100% 0%, rgba(236, 72, 153, 0.15) 0px, transparent 50%),
+                        radial-gradient(at 100% 100%, rgba(56, 189, 248, 0.15) 0px, transparent 50%),
+                        radial-gradient(at 0% 100%, rgba(168, 85, 247, 0.15) 0px, transparent 50%);
+            background-size: 200% 200%;
+            animation: meshGradient 10s ease infinite;
+        }
+        .dark .bg-mesh {
+            background: radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.1) 0px, transparent 50%),
+                        radial-gradient(at 100% 0%, rgba(236, 72, 153, 0.1) 0px, transparent 50%);
+            background-color: #000000;
+        }
+        @keyframes meshGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+
+<body class="bg-[#f8f9fa] text-slate-900 dark:bg-oled dark:text-white transition-colors duration-300 min-h-screen overflow-x-hidden font-sans relative pb-32">
+
+    <!-- Flashy Animated Background -->
+    <div class="bg-mesh"></div>
+
+    <!-- WAKELOCK ENGINE: Prevents Black Screen -->
+    <video id="wakeLockEngine" loop muted playsinline class="fixed w-[1px] h-[1px] opacity-0 pointer-events-none z-[-100]">
+        <source src="data:video/mp4;base64,AAAAHGZ0eXBpc29tAAAAAGlzb21pc28yYXZjMQAAAAgOZnJlZQAAAhxtZGF0AAACrgYF//+//7z/vP/8//z/+////v///wAAADRiY3R0AQAABQAAABgAAIAAAgADAAQABQAGAAcACAACAAAAAQAAAAIAAAADAAAABAAAAAUAAAAGAAAABwAAAAgAAgAAAAEAAAACAAAAAwAAAAQAAAAFAAAABgAAAAcAAAAIAAIAAAABAAAAAgAAAAMAAAAEAAAABQAAAAYAAAAHAAAACAAAAAAABgBib3ZjwAAAAAZib3ZjAAAAAGJvdmMAAAAAYm92YwAAAABib3ZjAAAAAGJvdmMAAAAAYm92YwAAAABib3ZjAAAABhhib3ZjAAAAAGJvdmMAAAAAYm92YwAAAABib3ZjAAAAAGJvdmMAAAAAYm92YwAAAABib3ZjAAAAAGJvdmMAAAAGGGJvdmMAAAAAYm92YwAAAABib3ZjAAAAAGJvdmMAAAAAYm92YwAAAABib3ZjAAAAAGJvdmMAAAAAYm92YwAAAAgI" type="video/mp4">
+    </video>
+
+    <header class="sticky top-0 z-40 bg-white/60 dark:bg-black/60 backdrop-blur-2xl border-b border-gray-200/50 dark:border-white/10 transition-colors duration-300">
+        <div class="max-w-md mx-auto px-5 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-[12px] bg-black dark:bg-white flex items-center justify-center text-white dark:text-black shadow-lg">
+                    <i class="ph-bold ph-planet text-2xl"></i>
+                </div>
+                <div class="flex flex-col">
+                    <h1 class="font-display font-bold text-lg tracking-tight leading-none text-shine grad-blue-cyan">STUDY ZONE</h1>
+                    <span class="text-[9px] font-mono tracking-[0.2em] text-indigo-600 dark:text-indigo-400 uppercase mt-0.5">Titanium Build</span>
+                </div>
+            </div>
+            
+            <button onclick="toggleTheme()" class="px-3 py-1.5 rounded-full bg-white dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 flex items-center gap-1.5 active:scale-95 transition-all shadow-sm">
+                <i class="ph-fill ph-moon text-sm dark:hidden text-slate-800"></i>
+                <i class="ph-fill ph-sun text-sm hidden dark:block text-amber-400"></i>
+                <span class="text-[10px] font-bold tracking-widest dark:hidden text-slate-700">WHITE</span>
+                <span class="text-[10px] font-bold tracking-widest hidden dark:block text-slate-200">ONYX</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="max-w-md mx-auto px-4 pt-6 pb-28 min-h-screen relative z-10">
+        
+        <!-- LIVE CLOCK WIDGET -->
+        <div class="mb-8 flex flex-col items-center justify-center animate-pop" style="animation-delay: 0.05s;">
+            <h2 id="liveTime" class="text-7xl font-display font-bold tracking-tighter text-slate-900 dark:text-white drop-shadow-md">00:00</h2>
+            <p id="liveDate" class="text-xs font-sans font-bold text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em] mt-1">Loading</p>
+        </div>
+
+        <!-- 1. HERO APP: SAHU KGS -->
+        <div class="card-light dark:card-dark rounded-[28px] p-2 mb-4 animate-pop shadow-[0_10px_40px_rgba(0,198,255,0.15)] dark:shadow-[0_10px_40px_rgba(0,198,255,0.08)]" style="animation-delay: 0.1s;">
+            <div class="bg-white/50 dark:bg-black/50 rounded-[24px] p-6 relative overflow-hidden">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-cyan-400 to-blue-500 flex items-center justify-center shadow-lg">
+                        <i class="ph-fill ph-atom text-3xl text-white"></i>
+                    </div>
+                    <div class="px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900/40 border border-blue-200 dark:border-blue-800">
+                        <span class="text-[9px] font-bold text-blue-700 dark:text-blue-400 tracking-widest uppercase">Core Node</span>
+                    </div>
+                </div>
+                <!-- Shining Text -->
+                <h2 class="font-display font-bold text-3xl tracking-tight text-shine grad-blue-cyan mb-1">SAHU KGS</h2>
+                <p class="text-[11px] font-mono text-slate-500 dark:text-slate-400 mb-5">ULTRA-FAST DIRECT GATEWAY</p>
+                
+                <button onclick="launchApp('http://sahukgs.com')" class="w-full py-4 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-black font-bold text-sm tracking-widest uppercase active:scale-95 transition-all flex items-center justify-center gap-2">
+                    <i class="ph-fill ph-lightning text-lg text-yellow-400 dark:text-yellow-600"></i>
+                    Initialize Stream
+                </button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+            
+            <!-- 2. Sachin Academy -->
+            <button onclick="launchApp('https://sachinacademy.netlify.app')" class="card-light dark:card-dark rounded-[24px] p-5 text-left active:scale-95 transition-all animate-pop" style="animation-delay: 0.15s;">
+                <div class="w-12 h-12 rounded-[14px] bg-gradient-to-tr from-yellow-400 to-orange-400 flex items-center justify-center mb-4 shadow-md">
+                    <i class="ph-fill ph-graduation-cap text-2xl text-white"></i>
+                </div>
+                <h3 class="font-display font-bold text-[17px] leading-tight mb-1 text-shine grad-gold">Sachin Academy</h3>
+                <p class="text-[9px] text-slate-500 uppercase font-bold tracking-widest">Netlify Engine</p>
+            </button>
+
+            <!-- 3. Study IQ -->
+            <button onclick="launchApp('https://sangam.free.nf/studyiq/?i=1')" class="card-light dark:card-dark rounded-[24px] p-5 text-left active:scale-95 transition-all animate-pop" style="animation-delay: 0.2s;">
+                <div class="w-12 h-12 rounded-[14px] bg-gradient-to-tr from-purple-500 to-pink-500 flex items-center justify-center mb-4 shadow-md">
+                    <i class="ph-fill ph-brain text-2xl text-white"></i>
+                </div>
+                <h3 class="font-display font-bold text-[17px] leading-tight mb-1 text-shine grad-purple-pink">Study IQ</h3>
+                <p class="text-[9px] text-slate-500 uppercase font-bold tracking-widest">Civil Services</p>
+            </button>
+
+            <!-- 4. Vidya Gram ✨ -->
+            <button onclick="launchApp('https://vidya.studybeepro.site/')" class="card-light dark:card-dark rounded-[24px] p-5 text-left active:scale-95 transition-all animate-pop" style="animation-delay: 0.25s;">
+                <div class="w-12 h-12 rounded-[14px] bg-gradient-to-tr from-emerald-400 to-teal-500 flex items-center justify-center mb-4 shadow-md">
+                    <i class="ph-fill ph-sparkle text-2xl text-white"></i>
+                </div>
+                <h3 class="font-display font-bold text-[17px] leading-tight mb-1 text-shine grad-emerald">Vidya Gram</h3>
+                <p class="text-[9px] text-emerald-600 dark:text-emerald-400 uppercase font-bold tracking-widest">StudyBee Pro</p>
+            </button>
+
+            <!-- 5. Vidya Backup 💖 -->
+            <button onclick="launchApp('https://studyapkmod-vidyagramx.vercel.app/')" class="card-light dark:card-dark rounded-[24px] p-5 text-left active:scale-95 transition-all animate-pop" style="animation-delay: 0.3s;">
+                <div class="w-12 h-12 rounded-[14px] bg-gradient-to-tr from-rose-400 to-red-500 flex items-center justify-center mb-4 shadow-md">
+                    <i class="ph-fill ph-heart-beat text-2xl text-white"></i>
+                </div>
+                <h3 class="font-display font-bold text-[17px] leading-tight mb-1 text-shine grad-rose">Vidya Backup</h3>
+                <p class="text-[9px] text-rose-600 dark:text-rose-400 uppercase font-bold tracking-widest">Vercel Cloud</p>
+            </button>
+
+            <!-- 6. Sachin Bee 🐝 -->
+            <button onclick="launchApp('https://sachin.studybeepro.site/')" class="card-light dark:card-dark rounded-[24px] p-5 text-left active:scale-95 transition-all animate-pop" style="animation-delay: 0.35s;">
+                <div class="w-12 h-12 rounded-[14px] bg-gradient-to-tr from-amber-400 to-yellow-500 flex items-center justify-center mb-4 shadow-md">
+                    <i class="ph-fill ph-hexagon text-2xl text-white"></i>
+                </div>
+                <h3 class="font-display font-bold text-[17px] leading-tight mb-1 text-shine grad-honey">Sachin Bee</h3>
+                <p class="text-[9px] text-amber-600 dark:text-amber-500 uppercase font-bold tracking-widest">Hive Node</p>
+            </button>
+
+            <!-- 7. Selection Bee 🐝 -->
+            <button onclick="launchApp('https://studybeepro.site/selectionbee/')" class="card-light dark:card-dark rounded-[24px] p-5 text-left active:scale-95 transition-all animate-pop" style="animation-delay: 0.4s;">
+                <div class="w-12 h-12 rounded-[14px] bg-gradient-to-tr from-pink-500 to-rose-400 flex items-center justify-center mb-4 shadow-md">
+                    <i class="ph-fill ph-shield-check text-2xl text-white"></i>
+                </div>
+                <h3 class="font-display font-bold text-[17px] leading-tight mb-1 text-shine grad-purple-pink">Selection Bee</h3>
+                <p class="text-[9px] text-slate-500 uppercase font-bold tracking-widest">Pro Portal</p>
+            </button>
+
+            <!-- 8. Spidy KGS -->
+            <button onclick="launchApp('https://kgs.spidyuniverse.in/')" class="card-light dark:card-dark rounded-[24px] p-5 text-left active:scale-95 transition-all animate-pop" style="animation-delay: 0.45s;">
+                <div class="w-12 h-12 rounded-[14px] bg-gradient-to-tr from-cyan-500 to-indigo-500 flex items-center justify-center mb-4 shadow-md">
+                    <i class="ph-fill ph-spider-web text-2xl text-white"></i>
+                </div>
+                <h3 class="font-display font-bold text-[17px] leading-tight mb-1 text-shine grad-spidy">Spidy KGS</h3>
+                <p class="text-[9px] text-cyan-600 dark:text-cyan-400 uppercase font-bold tracking-widest">Universe</p>
+            </button>
+
+            <!-- 9. KGS Backup -->
+            <button onclick="launchApp('https://vidyaverse-kgs.vercel.app/')" class="card-light dark:card-dark rounded-[24px] p-5 text-left active:scale-95 transition-all animate-pop" style="animation-delay: 0.5s;">
+                <div class="w-12 h-12 rounded-[14px] bg-slate-800 flex items-center justify-center mb-4 shadow-md border border-slate-600">
+                    <i class="ph-fill ph-cloud-arrow-down text-2xl text-slate-200"></i>
+                </div>
+                <h3 class="font-display font-bold text-[17px] leading-tight mb-1 text-slate-800 dark:text-white">KGS Backup</h3>
+                <p class="text-[9px] text-slate-500 uppercase font-bold tracking-widest">Failover</p>
+            </button>
+
+            <!-- 10. Global Studies 😄 -->
+            <button onclick="launchApp('https://spidystudy-kgs.onrender.com/')" class="card-light dark:card-dark rounded-[24px] p-5 text-left active:scale-95 transition-all animate-pop" style="animation-delay: 0.55s;">
+                <div class="w-12 h-12 rounded-[14px] bg-gradient-to-tr from-teal-400 to-cyan-500 flex items-center justify-center mb-4 shadow-md">
+                    <i class="ph-fill ph-globe-hemisphere-west text-2xl text-white"></i>
+                </div>
+                <h3 class="font-display font-bold text-[17px] leading-tight mb-1 text-shine grad-emerald">Global Study</h3>
+                <p class="text-[9px] text-slate-500 uppercase font-bold tracking-widest">World Affairs</p>
+            </button>
+
+            <!-- 11. Study Mate -->
+            <button onclick="launchApp('https://www.study-mate.in/home')" class="card-light dark:card-dark rounded-[24px] p-5 text-left active:scale-95 transition-all animate-pop" style="animation-delay: 0.6s;">
+                <div class="w-12 h-12 rounded-[14px] bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center mb-4 shadow-md">
+                    <i class="ph-fill ph-users-three text-2xl text-white"></i>
+                </div>
+                <h3 class="font-display font-bold text-[17px] leading-tight mb-1 text-shine grad-blue-cyan">Study Mate</h3>
+                <p class="text-[9px] text-slate-500 uppercase font-bold tracking-widest">Nexus Link</p>
+            </button>
+
+            <!-- 12. Aash Official -->
+            <button onclick="launchApp('https://studyapkmod-aash.vercel.app/home')" class="card-light dark:card-dark rounded-[24px] p-5 text-left active:scale-95 transition-all animate-pop" style="animation-delay: 0.65s;">
+                <div class="w-12 h-12 rounded-[14px] bg-gradient-to-tr from-red-500 to-orange-500 flex items-center justify-center mb-4 shadow-md">
+                    <i class="ph-fill ph-star-four text-2xl text-white"></i>
+                </div>
+                <h3 class="font-display font-bold text-[17px] leading-tight mb-1 text-shine grad-rose">Aash Official</h3>
+                <p class="text-[9px] text-orange-600 dark:text-orange-400 uppercase font-bold tracking-widest">Vercel Engine</p>
+            </button>
+
+            <!-- 13. Officers Academy -->
+            <button onclick="launchApp('https://studyapkmod-live.vercel.app/?app=gyan_bindu&view=courses')" class="card-light dark:card-dark rounded-[24px] p-5 text-left active:scale-95 transition-all animate-pop" style="animation-delay: 0.7s;">
+                <div class="w-12 h-12 rounded-[14px] bg-gradient-to-tr from-stone-600 to-stone-800 flex items-center justify-center mb-4 shadow-md">
+                    <i class="ph-fill ph-bank text-2xl text-stone-200"></i>
+                </div>
+                <h3 class="font-display font-bold text-[17px] leading-tight mb-1 text-slate-800 dark:text-white">Officers</h3>
+                <p class="text-[9px] text-stone-500 uppercase font-bold tracking-widest">Gyan Bindu</p>
+            </button>
+
+            <!-- 14. Selection Way -->
+            <button onclick="launchApp('https://newsw-3dx.pages.dev/')" class="card-light dark:card-dark rounded-[24px] p-5 text-left active:scale-95 transition-all animate-pop" style="animation-delay: 0.75s;">
+                <div class="w-12 h-12 rounded-[14px] bg-gradient-to-tr from-blue-400 to-cyan-300 flex items-center justify-center mb-4 shadow-md">
+                    <i class="ph-fill ph-target text-2xl text-white"></i>
+                </div>
+                <h3 class="font-display font-bold text-[17px] leading-tight mb-1 text-shine grad-blue-cyan">Selection Way</h3>
+                <p class="text-[9px] text-slate-500 uppercase font-bold tracking-widest">Spidy 3DX</p>
+            </button>
+
+            <!-- 15. Khan Backup -->
+            <button onclick="launchApp('https://khanglobalstudio.netlify.app')" class="card-light dark:card-dark rounded-[24px] p-5 text-left active:scale-95 transition-all animate-pop" style="animation-delay: 0.8s;">
+                <div class="w-12 h-12 rounded-[14px] bg-gradient-to-tr from-blue-600 to-blue-800 flex items-center justify-center mb-4 shadow-md">
+                    <i class="ph-fill ph-hard-drives text-2xl text-white"></i>
+                </div>
+                <h3 class="font-display font-bold text-[17px] leading-tight mb-1 text-blue-600 dark:text-blue-400">Khan Backup</h3>
+                <p class="text-[9px] text-slate-500 uppercase font-bold tracking-widest">Netlify Vault</p>
+            </button>
+
+            <!-- 16. YouTube Official (Full Width) -->
+            <button onclick="launchApp('https://m.youtube.com/')" class="col-span-2 card-light dark:card-dark rounded-[24px] p-5 text-left active:scale-95 transition-all animate-pop flex items-center gap-4" style="animation-delay: 0.85s;">
+                <div class="w-14 h-14 rounded-[14px] bg-[#ff0000] flex items-center justify-center shrink-0 shadow-lg shadow-red-500/20">
+                    <i class="ph-fill ph-youtube-logo text-3xl text-white"></i>
+                </div>
+                <div>
+                    <h3 class="font-display font-bold text-[18px] leading-tight mb-1 text-slate-900 dark:text-white">YouTube</h3>
+                    <p class="text-[9px] text-slate-500 uppercase font-bold tracking-widest">Media Engine</p>
+                </div>
+            </button>
+
+        </div>
+    </main>
+
+    <!-- PERFECT 5-ICON DOCK (FIXED LAYOUT, WON'T BREAK) -->
+    <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-sm z-50 animate-pop" style="animation-delay: 0.9s;">
+        <!-- Container with Flexbox to evenly space items -->
+        <div class="bg-white/80 dark:bg-[#111111]/80 backdrop-blur-3xl rounded-[32px] px-2 h-[72px] flex items-center justify-between shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/40 dark:border-white/10">
+            
+            <!-- 1. Home Button -->
+            <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="w-[20%] flex flex-col items-center justify-center text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all active:scale-90">
+                <i class="ph-fill ph-house text-[24px]"></i>
+            </button>
+            
+            <!-- 2. Sachin Academy Button -->
+            <button onclick="launchApp('https://sachinacademy.netlify.app')" class="w-[20%] flex flex-col items-center justify-center text-slate-400 hover:text-amber-500 transition-all active:scale-90">
+                <i class="ph-fill ph-graduation-cap text-[24px]"></i>
+            </button>
+
+            <!-- 3. CENTER FAB: Sahu KGS (Perfectly aligned in flex, lifted with negative margin) -->
+            <div class="w-[20%] h-full flex justify-center items-center">
+                <button onclick="launchApp('http://sahukgs.com')" class="w-[60px] h-[60px] rounded-full bg-gradient-to-tr from-blue-600 to-cyan-400 text-white flex items-center justify-center shadow-[0_8px_30px_rgba(0,198,255,0.4)] active:scale-90 transition-all -translate-y-4 border-4 border-white dark:border-[#111111]">
+                    <i class="ph-fill ph-atom text-[30px]"></i>
+                </button>
+            </div>
+            
+            <!-- 4. Study IQ Button -->
+            <button onclick="launchApp('https://sangam.free.nf/studyiq/?i=1')" class="w-[20%] flex flex-col items-center justify-center text-slate-400 hover:text-rose-500 transition-all active:scale-90">
+                <i class="ph-fill ph-brain text-[24px]"></i>
+            </button>
+
+            <!-- 5. Theme Toggle Button -->
+            <button onclick="toggleTheme()" class="w-[20%] flex flex-col items-center justify-center text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all active:scale-90">
+                <i class="ph-fill ph-moon text-[24px] dark:hidden"></i>
+                <i class="ph-fill ph-sun text-[24px] hidden dark:block text-amber-400"></i>
+            </button>
+            
+        </div>
+    </nav>
+
+    <script>
+        // --- LIVE CLOCK ---
+        function updateClock() {
+            const now = new Date();
+            let h = now.getHours();
+            const m = String(now.getMinutes()).padStart(2, '0');
+            h = h % 12 || 12; 
+            document.getElementById('liveTime').innerText = `${h}:${m}`;
+            const options = { weekday: 'long', month: 'short', day: 'numeric' };
+            document.getElementById('liveDate').innerText = now.toLocaleDateString('en-US', options);
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // --- THEME TOGGLE (OLED / PEARL) ---
+        function toggleTheme() {
+            const html = document.documentElement;
+            html.classList.toggle('dark');
+            localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+        }
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        // --- WAKELOCK (Anti-Black Screen Fix) ---
+        document.addEventListener('click', function() {
+            let vid = document.getElementById('wakeLockEngine');
+            if (vid && vid.paused) vid.play().catch(e => console.log("WakeLock deferred"));
+        }, { once: true });
+
+        // --- APP LAUNCHER (Fixes WebView Loading) ---
+        function launchApp(url) {
+            if (!url) return;
+            // Force link to open properly without freezing HTML to APK wrappers
+            window.location.href = url;
+        }
+    </script>
+</body>
+</html>
